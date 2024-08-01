@@ -126,6 +126,8 @@ const gameController = (function () {
         players[1].resetScore();
         result = '';
         activePlayer = players[0];
+
+        return board;
     }
 
     return { playRound, board, getActivePlayer, getResult, reset }
@@ -151,11 +153,10 @@ const screenController = function () {
     const result = document.querySelector('.result');
     let boardDiv = document.querySelector('.board');
     let resetBtn = document.querySelector('.reset');
-
-    const updateScreen = function () {
+    
+    let updateScreen = function () {
         turn.textContent = `${game.getActivePlayer().getPlayerName()}'s turn`;
         boardDiv.textContent = '';
-        board = game.board;
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
                 const cell = document.createElement('button');
@@ -173,10 +174,12 @@ const screenController = function () {
         const row = +e.target.dataset.row;
         const column = +e.target.dataset.column;
         game.playRound(row, column);
-        updateScreen();
+        if(result.textContent === ''){
+            updateScreen();
+        }
     }
     const resetHandler = function () {
-        game.reset();
+        board = game.reset();
         updateScreen();
     }
     resetBtn.addEventListener('click', resetHandler);
