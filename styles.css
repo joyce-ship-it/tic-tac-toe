@@ -1,0 +1,31 @@
+*{
+    box-sizing:border-box;
+    margin: 0px;
+    padding:0px;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board{
+    height:400px;
+    width:400px;
+    border:2px solid black;
+    border-radius: .5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap:.2rem;
+    padding:.2rem;
+}
+
+.board > .cell{
+    border: 1px solid red;
+    border-radius: .2rem;
+    font-size:1.4rem;
+}
+
