@@ -9,23 +9,97 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #78716c;
+}
+.container{
+    height:500px;
+    max-width:500px;
+    display:flex;
+    flex-direction:column;
+    gap:.5rem;
+}
+.reset{
+    padding:.5rem;
+    font-size: 1rem;
+    border:1px solid #333;
+    border-radius:.5rem;
+}
+.reset:hover{
+    box-shadow:1px 2px solid black;
+    background-color: #fcd34d;
+    font-weight: bold;
+}
+.turn{
+    font-size:1.3rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
 }
 
 .board{
     height:400px;
     width:400px;
-    border:2px solid black;
+    /* border:2px solid black; */
     border-radius: .5rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap:.2rem;
+    /* gap:.2rem; */
     padding:.2rem;
 }
 
 .board > .cell{
-    border: 1px solid red;
     border-radius: .2rem;
     font-size:1.4rem;
+    border:none;
+    border-right: 1px solid red;
+    border-bottom: 1px solid red;
+    background: #fecaca;
+    font-size: 4rem;
+}
+.board > .cell:hover{
+    background-color: #ef4444;
 }
 
+.result{
+    color:rgb(14, 206, 14);
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+dialog{
+    height:300px;
+    width:300px;
+    margin:auto;
+    border-radius: 1rem;;
+}
+dialog::backdrop{
+    opacity:0.9;
+    background: linear-gradient(45deg, chartreuse, crimson, hotpink, aqua);
+    
+}
+form{
+    height:100%;
+    padding:1rem;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
+}
+input{
+    padding:.5rem;
+    font-size:1rem;
+    border:1px solid #333;
+    border-radius: 1rem;
+}
+button[type="submit"]{
+    padding:.5rem 1rem;
+    font-size: 1rem;
+    border-radius:.5rem;
+}
+button[type = "submit"]:hover{
+    border:1px solid #333;
+    font-weight: bold;
+    background-color: rgb(69, 64, 223);
+    color:white;
+}

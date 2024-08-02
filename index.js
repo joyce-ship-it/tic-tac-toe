@@ -64,12 +64,15 @@ const Player = function (name, strike) {
     const resetScore = function () {
         score = 0;
     }
-    return { getPlayerName, getScore, getStrike, incrementScore, resetScore };
+    const setPlayerName = function(name){
+        playerName = name;
+    }
+    return { getPlayerName, getScore, getStrike, incrementScore, resetScore, setPlayerName };
 };
 
 const gameController = (function () {
     let board = gameBoard.getBoard();
-    const players = [Player('PlayerA', 'x'), Player('PlayerB', 'o')];
+    let players = [Player('PlayerA', 'x'), Player('PlayerB', 'o')];
     let activePlayer = players[0];
     let result;
     gameBoard.printBoard(board);
@@ -104,11 +107,11 @@ const gameController = (function () {
         if (checkWinner(board, activePlayer.getStrike())) {
             activePlayer.incrementScore();
             console.log(`${activePlayer.getPlayerName()} wins`);
-            result = `${activePlayer.getPlayerName()} wins`;
+            result = `${activePlayer.getPlayerName()} wins !`;
         }
         else if (checkTie(board)) {
             console.log('Its a tie');
-            result = `Its a tie`;
+            result = `Its a tie !`;
         }
         console.log(`${activePlayer.getPlayerName()} : ${activePlayer.getScore()}`);
         gameBoard.printBoard();
@@ -130,7 +133,7 @@ const gameController = (function () {
         return board;
     }
 
-    return { playRound, board, getActivePlayer, getResult, reset }
+    return { playRound, board, getActivePlayer, getResult, reset, players }
 
 })();
 
@@ -149,7 +152,25 @@ const screenController = function () {
     const turn = document.querySelector('.turn');
     let board = game.board;
 
-    
+    const dialog = document.querySelector('dialog');
+    const form = document.querySelector('form');
+    const ok = document.querySelector('.ok');
+    let player1Name, player2Name;
+
+    dialog.showModal();
+    ok.addEventListener('click', (e)=>{
+        e.preventDefault();
+        player1Name = document.querySelector('form').elements.namedItem('player1').value;
+        player2Name = document.querySelector('form').elements.namedItem('player2').value;
+        game.players[0].setPlayerName(player1Name !== "" ? player1Name: 'Player-1');
+        console.log(game.players[0].getPlayerName())
+        game.players[1].setPlayerName(player2Name !== "" ? player2Name: 'Player-2');
+        form.reset();
+        dialog.close();
+        updateScreen();// to use the user entered names
+    })
+
+
     const result = document.querySelector('.result');
     let boardDiv = document.querySelector('.board');
     let resetBtn = document.querySelector('.reset');
@@ -174,6 +195,7 @@ const screenController = function () {
         const row = +e.target.dataset.row;
         const column = +e.target.dataset.column;
         game.playRound(row, column);
+        // This will stop the game in case of a win or tie
         if(result.textContent === ''){
             updateScreen();
         }
