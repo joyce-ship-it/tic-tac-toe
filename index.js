@@ -101,9 +101,10 @@ const gameController = (function () {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     }
     const playRound = function (row, column) {
-        console.log(`${activePlayer.getPlayerName()}'s turn`)
+        console.log(`${activePlayer.getPlayerName()}'s turn`);
+        let prevBoard = board[row][column];
         gameBoard.insertValue(row, column, activePlayer.getStrike());
-
+        
         if (checkWinner(board, activePlayer.getStrike())) {
             activePlayer.incrementScore();
             console.log(`${activePlayer.getPlayerName()} wins`);
@@ -115,7 +116,8 @@ const gameController = (function () {
         }
         console.log(`${activePlayer.getPlayerName()} : ${activePlayer.getScore()}`);
         gameBoard.printBoard();
-        switchPlayer();
+        // (prevBoard !== board[row][column]) ? console.log("Not same"): console.log('same');
+        if(prevBoard !== board[row][column]) switchPlayer() ;
     }
     const getResult = function () {
         return result;
